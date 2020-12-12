@@ -18,9 +18,9 @@ python -m pip install -U pip
 python -m pip install -U matplotlib
 
 
-![](blob/codig_fuente/archivos/Toma%201.jpeg)
-![](blob/codig_fuente/archivos/Toma%202.jpeg)
-![](blob/codig_fuente/archivos/Toma%203.jpeg)
-![](blob/codig_fuente/archivos/Toma%204.jpeg)
-![](blob/codig_fuente/archivos/Toma%205.jpeg)
-![](blob/codig_fuente/archivos/Toma%206.jpeg)
+![](captures/Toma%201.jpeg)
+![](captures/Toma%202.jpeg)
+![](captures/Toma%203.jpeg)
+![](captures/Toma%204.jpeg)
+![](captures/Toma%205.jpeg)
+![](captures/Toma%205.jpeg)
