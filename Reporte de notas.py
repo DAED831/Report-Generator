@@ -1022,6 +1022,7 @@ def lector(hola, numero_estudiantes, numero_notas, diccionario):
 				matriz_cal.append(matriz[:])
 				matriz = []
 				st = True
+				contador2 = 0
 			elif elemento[numero]  == "'":
 				contador += 1
 				if contador == 2:
@@ -1031,13 +1032,14 @@ def lector(hola, numero_estudiantes, numero_notas, diccionario):
 					nombre = ""
 			elif (elemento[numero].isalpha() == True or (elemento[numero] == " " and elemento[numero+1] != "[")) and st:
 				nombre += elemento[numero]
+			elif elemento[numero] == " " and elemento[numero+1].isnumeric()==True and elemento[numero-2].isnumeric() == True and st == False:
+				contador2+=1
 			elif elemento[numero] == "," and elemento[numero-1] != "]":
 				contador2+=1
 				if contador2 == 2:
 					contador2 = 0
 					matriz.append(float(nombre))
 					nombre = ""
-					st = True
 			elif elemento[numero].isnumeric() == True or elemento[numero] == ".":
 				nombre += elemento[numero]
 	
