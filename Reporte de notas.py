@@ -1177,7 +1177,7 @@ def restricted(diccionario):
 			wait()
 			menu_de_seleccion_res(matriz_cal, encabezado1, encabezado2, numero_estudiantes, numero_notas, diccionario)
 	elif yes == "N":
-		main1(diccionario)
+		restricted(diccionario)
 
 def menu_de_seleccion_res(matriz_cal, encabezado1, encabezado2, numero_estudiantes, numero_notas, diccionario):
 	"""
@@ -1222,16 +1222,251 @@ def menu_de_seleccion_res(matriz_cal, encabezado1, encabezado2, numero_estudiant
 	if yes == "S":
 			
 		if seleccion == "2":
-			notas(matriz_cal, encabezado1, encabezado2, numero_estudiantes, numero_notas, diccionario)
+			notas1(matriz_cal, encabezado1, encabezado2, numero_estudiantes, numero_notas, diccionario)
 		elif seleccion == "0":
-			final(matriz_cal, encabezado1, encabezado2, numero_estudiantes, numero_notas, diccionario)
+			final1(matriz_cal, encabezado1, encabezado2, numero_estudiantes, numero_notas, diccionario)
 		elif seleccion == "1":
-			tabla(matriz_cal, encabezado1, encabezado2, numero_estudiantes, numero_notas, diccionario)
+			tabla1(matriz_cal, encabezado1, encabezado2, numero_estudiantes, numero_notas, diccionario)
 		elif seleccion == "3":
-			diagrama(matriz_cal, encabezado1, encabezado2, numero_estudiantes, numero_notas, diccionario)
+			diagrama1(matriz_cal, encabezado1, encabezado2, numero_estudiantes, numero_notas, diccionario)
 		else:
-			main1(diccionario)	
+			restricted(diccionario)	
 	elif yes == "N":
 		menu_de_seleccion(matriz_cal, encabezado1, encabezado2, numero_estudiantes, numero_notas, diccionario)
+
+
+def notas1(matriz_cal, parte1, parte2, numero_estudiantes, numero_notas, diccionario):
+	
+	"""
+	Función encargade de imprimir la tabla de notas actual con los datos presentes.
+	:param int contador: variable encargada de indicar en el f-string el nombre del estudiante al cual las notas consecuntes perteneces
+	:param list fila[]: itera entre las distintas sublistas presnentes en la matriz principal matriz_cal, para imprimir de manera individual sus valores al usuario en una misma fila
+	:param obj elemento: encargado de iterar en todos los datos dentro de las sublistas definidas por fila para su posterior impresión con el uso de f-string
+	:param function wait(): espera interacción del usuario para continuar antes de volver al menu principal denomidado menu_de_seleccion
+	:param function encabezado(): sólo imprime el encabezado de la tabla en pantalla con los criterios dados al inicio del programa
+	"""
+	encabezado(parte1, parte2, diccionario)
+	
+	contador = 0
+
+	for fila in matriz_cal:
+		contador += 1
+		for elemento in fila: 
+			if type(elemento) == str:
+				print(f"|{contador:<3} {elemento:<36}", end="")
+			else:
+				print(f"|{elemento:<4}", end="|")
+		print()
+	print("Presione Cualquier Tecla para Continuar")
+	wait()
+	wait()
+	menu_de_seleccion_res(matriz_cal, parte1, parte2, numero_estudiantes, numero_notas, diccionario)
+def final1(matriz_cal, parte1, parte2, numero_estudiantes, numero_notas, diccionario):
+	"""
+	Se encarga de mostrar la nota deifinitiva para el periodo de tiempo especificado acorde a la totalidad de notas. Cada nota tiene el mismo peso, no se puede realizar sobre procentajes.
+	:param string parte3: cambio del valor de la tabla del encabezado para desglosar el texto especidicado.
+	:param function encabezado(): función que imprime el encabezado de la tabla.
+	:param int contador: iterador para el f-string 
+	:param int contador1: acumula valores a ser divididos para la obtención de la nota final
+	:param int suma: valor final de la calificación.
+	:param function wait(): espera una respuesta del usuario para continuar con la ejecución del código.
+	:param function menu_de_seleccion(): regresa al menu de opción del reporte.
+	"""
+
+
+	parte3 = "Notas Finales (ponderado)"
+
+	encabezado(parte1, parte3, diccionario)
+
+	contador = 0
+	contador1 = 0
+	suma = 0
+
+	for fila in matriz_cal:
+		contador += 1
+		suma = 0
+		contador1 = 0
+		for elemento in fila: 
+			if type(elemento) == str:
+				print(f"|{contador:<3} {elemento:<36}", end="")
+			else:
+				suma = suma + elemento
+				contador1 += 1
+
+		suma = round((suma)/(contador1), 2)
+		print(f"|{suma:<4}", end="|")
+		print()
+	
+	print("Presione Cualquier Tecla para Continuar: ")
+	wait()
+	wait()
+	menu_de_seleccion_res(matriz_cal, parte1, parte2, numero_estudiantes, numero_notas, diccionario)
+def tabla1(matriz_cal, parte1, parte2, numero_estudiantes, numero_notas, diccionario):
+	"""
+	Imprime un gráfico del comportamiento del nivel académico del alumno, es uno individual.
+	:param str e int seleccion: indicador del código de estudiante a ser revisado para la generación de la tabla.
+	:param list matriz_secundaria[]: copia específica de los datos del estudiante presentes en la matriz original.
+	:param list matriz_terciaria[int]: lista de indicadores de las notas.
+	:param maltloplib fig, axs: generador de la ventana contenedora de la tabla.
+	:param maltloplib axs.plot: gráfico de las listas.
+	:param function wait(): espera interacción del usuario para continuar la ejecución del código.
+	:param function menu_de_seleccion(): vuelta al menu principal.
+	"""
+
+	
+	while True:
+		seleccion = input("Por Favor Ingrese Código {} a Revisar: ".format(parte1))
+		try:
+			seleccion = int(seleccion)
+			break
+		except ValueError:
+			print()
+			print("Ingrese un número de {} válido.".format(parte1))
+			print()
+	
+	while int(seleccion) > len(matriz_cal):
+		print("Ingrese un número de {} existente.".format(parte1))
+		while True:
+			seleccion = input("Por Favor Ingrese Código {} a Revisar: ".format(parte1))
+			try:
+				seleccion = int(seleccion)
+				break
+			except ValueError:
+				print()
+				print("Ingrese un número de {} válido: ".format(parte1))
+				print()
+
+	print("El código {}, pertenece al estudiante {}, ¿es esto correcto?".format(seleccion, matriz_cal[int(seleccion)-1][0]))
+
+	yes = input("S/N: ").upper()
+
+	while yes != "S" and yes != "N":
+		yes = input("S/N: ").upper()
+
+	while yes == "N":
+		while True:
+			seleccion = input("Por Favor Ingrese Código {} a Revisar: ".format(parte1))
+			try:
+				seleccion = int(seleccion)
+				break
+			except ValueError:
+				print()
+				print("Ingrese un número de {} válido.".format(parte1))
+				print()
+	
+		while int(seleccion) > len(matriz_cal) or int(seleccion) == 0:
+			print("Ingrese un número de {} existente.".format(parte1))
+			while True:
+				seleccion = input("Por Favor Ingrese Código {} a Revisar: ".format(parte1))
+				try:
+					seleccion = int(seleccion)
+					break
+				except ValueError:
+					print()
+					print("Ingrese un número de {} válido.".format(parte1))
+					print()
+
+		print("El código {}, pertenece al estudiante {}, ¿es esto correcto?".format(seleccion, matriz_cal[int(seleccion)-1][0]))
+
+		yes = input("S/N: ").upper()
+
+		while yes != "S" and yes != "N":
+			yes = input("S/N: ").upper()
+
+
+	seleccion = int(seleccion)-1
+
+	matriz_secundaria = matriz_cal[seleccion]
+
+	matriz_terciaria = [0]
+	
+	contador = 0
+	for elemento in matriz_secundaria[1:]:
+		contador += 1
+		matriz_terciaria.append(contador)
+
+	matriz_alv = [0]
+
+	for elemento in matriz_secundaria[1:]:
+		matriz_alv.append(elemento)
+	
+
+	fig, axs = plt.subplots(1, 1)
+	if len(matriz_alv) < 3:
+		axs.plot(matriz_terciaria[1:], matriz_alv[1:], 'o', color = 'red', label= 'Rendimiento {}'.format(matriz_secundaria[0]))
+		fig.suptitle(f'Rendimiento {matriz_secundaria[0]}')
+		plt.ylabel("Nota Obtenida")
+		plt.xlabel("Número Nota")
+		plt.legend()
+		plt.grid()
+		plt.show()
+	else:
+		axs.plot(matriz_terciaria[1:], matriz_alv[1:], color = 'red', label= 'Rendimiento {}'.format(matriz_secundaria[0]))
+		fig.suptitle(f'Rendimiento {matriz_secundaria[0]}')
+		plt.ylabel("Nota Obtenida")
+		plt.xlabel("Número Nota")
+		plt.legend()
+		plt.grid()
+		plt.show()
+		
+
+
+
+	input("Presione Cualquier Tecla para Continuar...")
+
+	wait()
+	menu_de_seleccion_res(matriz_cal, parte1, parte2, numero_estudiantes, numero_notas, diccionario)
+
+def diagrama1(matriz_cal, parte1, parte2, numero_estudiantes, numero_notas, diccionario):
+
+	"""
+	Generador del diagrama con los resultados de las notas ponderadas a nivel general; todos los estudiantes.
+	:param int contador1: acumula las notas por estudiante
+	:param int suma: ponderado de las notas presentes
+	:param list matriz_cal_final[float]: lista de los ponderados por estudiante
+	:param list matriz_terciaria[str]: lista de nombres de los estudiantes
+	:param maltloplib fig, as: ventana con la impresion de los datos.
+	:param function wait(): espera interaccion de usuario para seguir con la ejecución del código.
+	:param function menu_de_seleccion: menu anterior de opciones
+	"""
+
+	contador1 = 0
+	suma = 0
+
+	matriz_cal_final = []
+	matriz_terciaria = []
+
+	for i in range(len(matriz_cal)):
+
+		suma = 0
+		contador1 = 0
+		for elemento in matriz_cal[i]:
+			if type(elemento) == str:
+				matriz_terciaria.append(elemento)
+			else:
+				suma = suma + elemento
+				contador1 += 1
+
+		suma = round((suma)/(contador1), 2)
+
+		matriz_cal_final.append(suma)
+	
+	names = matriz_terciaria[:]
+	values = matriz_cal_final[:]
+
+	fig, ax = plt.subplots()
+	ax.bar(names, values, color='gray', width = 0.5)
+	fig.suptitle('Rendimiento General')
+	ax.legend()
+	ax.grid()
+	plt.ylabel("Nota Final")
+	plt.xlabel("Nombre Estudiante")
+	plt.show()
+
+	input("Presione Cualquier Tecla para Continuar...")
+
+	wait()
+	menu_de_seleccion_res(matriz_cal, parte1, parte2, numero_estudiantes, numero_notas, diccionario)
+
 
 usuarios(diccionario)
